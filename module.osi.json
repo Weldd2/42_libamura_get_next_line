@@ -1,0 +1,13 @@
+{
+	"name": "gnl",
+	"dependencies": [
+		{
+			"name": "mem",
+			"repo": "git@github.com:Weldd2/42_libamura_mem.git"
+		},
+		{
+			"name": "str",
+			"repo": "git@github.com:Weldd2/42_libamura_str.git"
+		}
+	]
+}
