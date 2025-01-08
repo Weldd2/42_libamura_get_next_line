@@ -6,48 +6,32 @@
 /*   By: antoinemura <antoinemura@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 23:27:04 by antoinemura       #+#    #+#             */
-/*   Updated: 2024/12/19 04:50:54 by antoinemura      ###   ########.fr       */
+/*   Updated: 2025/01/08 15:44:06 by antoinemura      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gnl.h"
 
-bool	found_endline(char *line, int *pos)
-{
-	int	i;
-
-	i = 0;
-	if (line == NULL)
-		return (false);
-	while (line[i] != '\0' && line[i] != '\n')
-		i++;
-	if (line[i] == '\0')
-		return (false);
-	return (*pos = i, true);
-}
-
 char	*gnl_get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE + 1];
+	static char	buffer[BUFFER_SIZE + 1] = "";
 	char		*line;
-	int			pos;
-	int			bytes_read;
-	size_t		line_size;
 
-	line_size = BUFFER_SIZE;
-	line = mem_mgc_calloc(BUFFER_SIZE, sizeof(char));
-	str_strlcat(line, buffer, BUFFER_SIZE);
-	while (found_endline(line, &pos) == false)
+	line = mem_calloc(BUFFER_SIZE + 1, sizeof(char));
+	while (1)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
+		str_strcat_realloc(&line, buffer, BUFFER_SIZE);
+		if (str_strcontains(buffer, '\n') != -1)
+			break ;
+		if (fd == -1 || read(fd, buffer, BUFFER_SIZE) <= 0)
+		{
+			if (line[0] == '\0')
+				return (free(line), NULL);
+			buffer[0] = '\0';
 			return (line);
-		line_size += BUFFER_SIZE;
-		line = mem_realloc(line, line_size - BUFFER_SIZE, line_size);
-		str_strlcat(line, buffer, line_size);
+		}
 	}
-	str_strlcpy(buffer, str_substr(line, pos + 1, str_strlen(line) - pos), \
-		BUFFER_SIZE);
-	line = str_substr(line, 0, pos + 1);
+	str_replace_sub(&line, 0, str_strcontains(line, '\n') + 1);
+	str_slice(buffer, str_strcontains(buffer, '\n') + 1, BUFFER_SIZE + 1);
 	return (line);
 }

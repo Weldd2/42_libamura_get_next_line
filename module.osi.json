@@ -8,6 +8,10 @@
 		{
 			"name": "str",
 			"repo": "git@github.com:Weldd2/42_libamura_str.git"
+		},
+		{
+			"name": "io",
+			"repo": "git@github.com:Weldd2/42_libamura_io.git"
 		}
 	]
 }
