@@ -6,14 +6,14 @@
 /*   By: antoinemura <antoinemura@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:28:48 by antoinemura       #+#    #+#             */
-/*   Updated: 2025/01/08 15:43:54 by antoinemura      ###   ########.fr       */
+/*   Updated: 2025/01/11 20:46:59 by antoinemura      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GNL_H
 # define GNL_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 2
 # endif
 # include <unistd.h>
 # include <stdlib.h>
